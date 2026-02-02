@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fold DB — The AI-Powered Distributed Data Platform</title>
+    <meta
+      name="description"
+      content="A Rust-based distributed data platform with AI-powered ingestion, real-time processing, and schema-based storage. Build smarter data applications."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Gradient Orbs Background -->
+    <div class="bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="#" class="nav-logo">
+          <span class="logo-icon">⬡</span>
+          <span class="logo-text">fold<span class="logo-accent">db</span></span>
+        </a>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#quickstart">Quick Start</a>
+          <a href="#examples">Examples</a>
+          <a href="https://docs.rs/datafold" target="_blank">Docs</a>
+          <a
+            href="https://github.com/shiba4life/fold_db"
+            target="_blank"
+            class="nav-github"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+              />
+            </svg>
+          </a>
+        </div>
+        <button class="nav-mobile-toggle" id="mobileToggle">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="hero-container">
+        <div class="hero-badge">
+          <span class="badge-icon">🦀</span>
+          <span>Built with Rust</span>
+        </div>
+        <h1 class="hero-title">
+          The <span class="gradient-text">AI-Powered</span><br />
+          Distributed Data Platform
+        </h1>
+        <p class="hero-subtitle">
+          Schema-based storage, intelligent ingestion, and real-time
+          processing.<br />
+          Build smarter data applications with less code.
+        </p>
+        <div class="hero-actions">
+          <a href="#quickstart" class="btn btn-primary">
+            <span>Get Started</span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a
+            href="https://github.com/shiba4life/fold_db"
+            target="_blank"
+            class="btn btn-secondary"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+              />
+            </svg>
+            <span>View on GitHub</span>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-value">50μs</span>
+            <span class="stat-label">Query Latency</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Type Safe</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value">0</span>
+            <span class="stat-label">Runtime Deps</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Terminal -->
+      <div class="hero-terminal">
+        <div class="terminal-chrome">
+          <div class="terminal-buttons">
+            <span class="btn-close"></span>
+            <span class="btn-minimize"></span>
+            <span class="btn-maximize"></span>
+          </div>
+          <span class="terminal-title">fold_db — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-line">
+            <span class="prompt">$</span>
+            <span class="command">cargo install datafold</span>
+          </div>
+          <div class="terminal-line output">
+            <span class="success">✓</span> Installing datafold v0.1.55
+          </div>
+          <div class="terminal-line output indent">
+            Compiling datafold v0.1.55
+          </div>
+          <div class="terminal-line output indent">
+            <span class="success">Finished</span> release [optimized] target(s)
+            in 42.3s
+          </div>
+          <div class="terminal-line">
+            <span class="prompt">$</span>
+            <span class="command">datafold_http_server --port 9001</span>
+          </div>
+          <div class="terminal-line output">
+            <span class="info">⬡</span> FoldDB Server starting on
+            <span class="highlight">http://localhost:9001</span>
+          </div>
+          <div class="terminal-line output">
+            <span class="success">✓</span> Schema service connected
+          </div>
+          <div class="terminal-line output">
+            <span class="success">✓</span> AI ingestion pipeline ready
+          </div>
+          <div class="terminal-line">
+            <span class="prompt">$</span>
+            <span class="cursor"></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">Features</span>
+          <h2 class="section-title">
+            Everything you need for<br /><span class="gradient-text"
+              >modern data applications</span
+            >
+          </h2>
+          <p class="section-subtitle">
+            From AI-powered ingestion to distributed queries, FoldDB handles the
+            complexity so you can focus on building.
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card feature-highlight">
+            <div class="feature-icon">🤖</div>
+            <h3>AI-Powered Ingestion</h3>
+            <p>
+              Drop any JSON and let AI automatically generate schemas, map
+              fields, and structure your data. No manual schema definitions
+              required.
+            </p>
+            <div class="feature-code">
+              <pre><code><span class="keyword">let</span> result = ingestion
+    .<span class="method">process_json</span>(any_json_data)
+    .<span class="keyword">await</span>?;
+<span class="comment">// Schema auto-generated ✨</span></code></pre>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Natural Language Queries</h3>
+            <p>
+              Ask questions in plain English. AI interprets your intent and
+              returns structured results.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Real-Time Processing</h3>
+            <p>
+              Event-driven architecture with automatic transform execution as
+              data flows through.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Distributed P2P</h3>
+            <p>
+              Built-in peer discovery and networking. Scale horizontally without
+              infrastructure changes.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <h3>Fine-Grained Permissions</h3>
+            <p>
+              Trust-based access control at the field level. Multi-tenant
+              isolation out of the box.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">☁️</div>
+            <h3>Serverless Ready</h3>
+            <p>
+              S3-backed storage and DynamoDB support. Deploy to AWS Lambda with
+              zero modifications.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Dynamic Schemas</h3>
+            <p>
+              Schemas evolve with your data. Add fields, update validation, all
+              without migrations.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔌</div>
+            <h3>Extensible Adapters</h3>
+            <p>
+              Plugin system for Twitter, Reddit, webhooks, and custom data
+              sources.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section class="examples" id="examples">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">Code Examples</span>
+          <h2 class="section-title">Developer-first <span class="gradient-text">API design</span></h2>
+          <p class="section-subtitle">Clean, intuitive APIs that get out of your way. Ship faster with less boilerplate.</p>
+        </div>
+
+        <div class="examples-tabs">
+          <button class="tab-btn active" data-tab="ingestion">AI Ingestion</button>
+          <button class="tab-btn" data-tab="query">Query</button>
+          <button class="tab-btn" data-tab="serverless">Serverless</button>
+          <button class="tab-btn" data-tab="frontend">Frontend</button>
+        </div>
+
+        <div class="examples-content">
+          <div class="example-panel active" id="ingestion">
+            <div class="example-description">
+              <h3>Ingest any data with AI</h3>
+              <p>Just send your JSON data — FoldDB automatically analyzes it, generates an optimized schema, and stores it.</p>
+              <ul class="example-features">
+                <li>Automatic schema generation</li>
+                <li>Intelligent field mapping</li>
+                <li>Type inference and validation</li>
+                <li>Async processing with progress tracking</li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">rust</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="keyword">use</span> datafold::{IngestionCore, IngestionConfig};
+<span class="keyword">use</span> serde_json::json;
+
+<span class="keyword">let</span> config = IngestionConfig::from_env()?;
+<span class="keyword">let</span> ingestion = IngestionCore::new(config)?;
+
+<span class="comment">// Drop any JSON — AI handles the rest</span>
+<span class="keyword">let</span> data = json!({
+    <span class="string">"user"</span>: <span class="string">"alice"</span>,
+    <span class="string">"action"</span>: <span class="string">"purchase"</span>,
+    <span class="string">"total"</span>: <span class="number">99.99</span>
+});
+
+<span class="keyword">let</span> result = ingestion
+    .process_json_ingestion(data).<span class="keyword">await</span>?;</code></pre>
+            </div>
+          </div>
+
+          <div class="example-panel" id="query">
+            <div class="example-description">
+              <h3>Query with natural language</h3>
+              <p>Ask questions in plain English and get structured results.</p>
+              <ul class="example-features">
+                <li>Natural language understanding</li>
+                <li>Schema-aware query planning</li>
+                <li>Automatic result formatting</li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">rust</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="keyword">use</span> datafold::DataFoldNode;
+
+<span class="keyword">let</span> node = DataFoldNode::new_with_defaults().<span class="keyword">await</span>?;
+
+<span class="comment">// Natural language query</span>
+<span class="keyword">let</span> response = node.ai_query(
+    <span class="string">"Show me all purchases over $50"</span>
+).<span class="keyword">await</span>?;
+
+<span class="keyword">for</span> item <span class="keyword">in</span> response.results {
+    println!(<span class="string">"{}: ${}"</span>, item.user, item.total);
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="example-panel" id="serverless">
+            <div class="example-description">
+              <h3>Deploy to AWS Lambda</h3>
+              <p>First-class serverless support with DynamoDB multi-tenant isolation.</p>
+              <ul class="example-features">
+                <li>DynamoDB multi-tenant backend</li>
+                <li>S3 sync for persistence</li>
+                <li>User isolation out of the box</li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">rust</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="keyword">use</span> datafold::lambda::{LambdaConfig, LambdaContext};
+
+<span class="keyword">let</span> config = LambdaConfig::new(
+    LambdaStorage::DynamoDb(DynamoDbConfig {
+        region: <span class="string">"us-east-1"</span>.to_string(),
+        tables: ExplicitTables::from_prefix(<span class="string">"MyApp"</span>),
+        auto_create: <span class="keyword">true</span>,
+    }),
+);
+
+LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
+            </div>
+          </div>
+
+          <div class="example-panel" id="frontend">
+            <div class="example-description">
+              <h3>Type-safe frontend client</h3>
+              <p>Full TypeScript support with intelligent caching and standardized error handling.</p>
+              <ul class="example-features">
+                <li>100% type coverage</li>
+                <li>Intelligent request caching</li>
+                <li>Automatic retry with backoff</li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">typescript</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="keyword">import</span> { schemaClient } <span class="keyword">from</span> <span class="string">'@datafold/client'</span>;
+
+<span class="keyword">const</span> response = <span class="keyword">await</span> schemaClient.getSchemas();
+
+<span class="keyword">if</span> (response.success) {
+  <span class="keyword">const</span> schemas = response.data;
+  schemas.forEach(s => console.log(s.name));
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="quickstart" id="quickstart">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">Quick Start</span>
+          <h2 class="section-title">Up and running in <span class="gradient-text">under 2 minutes</span></h2>
+        </div>
+
+        <div class="quickstart-grid">
+          <div class="quickstart-step">
+            <div class="step-number">01</div>
+            <h3>Install</h3>
+            <p>Install via Cargo or download a pre-built binary.</p>
+            <div class="step-code"><code>cargo install datafold</code></div>
+          </div>
+          <div class="quickstart-step">
+            <div class="step-number">02</div>
+            <h3>Configure</h3>
+            <p>Set your OpenRouter API key for AI features (optional).</p>
+            <div class="step-code"><code>export OPENROUTER_API_KEY="sk-..."</code></div>
+          </div>
+          <div class="quickstart-step">
+            <div class="step-number">03</div>
+            <h3>Launch</h3>
+            <p>Start the HTTP server with the web UI.</p>
+            <div class="step-code"><code>datafold_http_server --port 9001</code></div>
+          </div>
+          <div class="quickstart-step">
+            <div class="step-number">04</div>
+            <h3>Build</h3>
+            <p>Open localhost:9001 and start ingesting data.</p>
+            <div class="step-code"><code>open http://localhost:9001</code></div>
+          </div>
+        </div>
+
+        <div class="quickstart-cta">
+          <a href="https://github.com/shiba4life/fold_db#-quick-start" target="_blank" class="btn btn-primary">
+            <span>View Full Installation Guide</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="architecture">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">Architecture</span>
+          <h2 class="section-title">Built for <span class="gradient-text">scale and flexibility</span></h2>
+        </div>
+
+        <div class="arch-diagram">
+          <div class="arch-layer arch-client">
+            <div class="arch-label">Clients</div>
+            <div class="arch-items">
+              <div class="arch-item">Web UI</div>
+              <div class="arch-item">REST API</div>
+              <div class="arch-item">TypeScript SDK</div>
+              <div class="arch-item">CLI</div>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-layer arch-server">
+            <div class="arch-label">FoldDB Core</div>
+            <div class="arch-items">
+              <div class="arch-item">AI Ingestion</div>
+              <div class="arch-item">Query Engine</div>
+              <div class="arch-item">Transform Pipeline</div>
+              <div class="arch-item">Schema Manager</div>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-layer arch-storage">
+            <div class="arch-label">Storage</div>
+            <div class="arch-items">
+              <div class="arch-item">Sled (Local)</div>
+              <div class="arch-item">DynamoDB</div>
+              <div class="arch-item">S3</div>
+              <div class="arch-item">P2P Network</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="section-container">
+        <div class="cta-content">
+          <h2>Ready to build something amazing?</h2>
+          <p>Join developers building the next generation of data applications with FoldDB.</p>
+          <div class="cta-actions">
+            <a href="https://github.com/shiba4life/fold_db" target="_blank" class="btn btn-primary btn-large">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>Star on GitHub</span>
+            </a>
+            <a href="https://docs.rs/datafold" target="_blank" class="btn btn-secondary btn-large">
+              <span>Read the Docs</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <span class="logo-icon">⬡</span>
+            <span class="logo-text">fold<span class="logo-accent">db</span></span>
+          </a>
+          <p>The AI-Powered Distributed Data Platform</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#quickstart">Quick Start</a>
+            <a href="#examples">Examples</a>
+          </div>
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <a href="https://docs.rs/datafold" target="_blank">Documentation</a>
+            <a href="https://github.com/shiba4life/fold_db" target="_blank">GitHub</a>
+            <a href="https://crates.io/crates/datafold" target="_blank">Crates.io</a>
+          </div>
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <a href="#">MIT License</a>
+            <a href="#">Apache 2.0</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 FoldDB. Dual-licensed under MIT and Apache 2.0.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
