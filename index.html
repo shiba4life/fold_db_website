@@ -35,6 +35,7 @@
           <a href="#features">Features</a>
           <a href="#quickstart">Quick Start</a>
           <a href="#examples">Examples</a>
+          <a href="#schemas">Schemas</a>
           <a href="https://docs.rs/datafold" target="_blank">Docs</a>
           <a
             href="https://github.com/shiba4life/fold_db"
@@ -61,9 +62,11 @@
           <span class="badge-icon">🦀</span>
           <span>Built with Rust</span>
         </div>
+        <p class="hero-tagline">
+          AI powered cloud personal data storage.
+        </p>
         <h1 class="hero-title">
-          The <span class="gradient-text">AI-Powered</span><br />
-          Distributed Data Platform
+          Folders are out. Introducing <span class="gradient-text">Fold DB</span>
         </h1>
         <p class="hero-subtitle">
           Schema-based storage, intelligent ingestion, and real-time
@@ -258,12 +261,19 @@
       <div class="section-container">
         <div class="section-header">
           <span class="section-badge">Code Examples</span>
-          <h2 class="section-title">Developer-first <span class="gradient-text">API design</span></h2>
-          <p class="section-subtitle">Clean, intuitive APIs that get out of your way. Ship faster with less boilerplate.</p>
+          <h2 class="section-title">
+            Developer-first <span class="gradient-text">API design</span>
+          </h2>
+          <p class="section-subtitle">
+            Clean, intuitive APIs that get out of your way. Ship faster with
+            less boilerplate.
+          </p>
         </div>
 
         <div class="examples-tabs">
-          <button class="tab-btn active" data-tab="ingestion">AI Ingestion</button>
+          <button class="tab-btn active" data-tab="ingestion">
+            AI Ingestion
+          </button>
           <button class="tab-btn" data-tab="query">Query</button>
           <button class="tab-btn" data-tab="serverless">Serverless</button>
           <button class="tab-btn" data-tab="frontend">Frontend</button>
@@ -273,7 +283,10 @@
           <div class="example-panel active" id="ingestion">
             <div class="example-description">
               <h3>Ingest any data with AI</h3>
-              <p>Just send your JSON data — FoldDB automatically analyzes it, generates an optimized schema, and stores it.</p>
+              <p>
+                Just send your JSON data — FoldDB automatically analyzes it,
+                generates an optimized schema, and stores it.
+              </p>
               <ul class="example-features">
                 <li>Automatic schema generation</li>
                 <li>Intelligent field mapping</li>
@@ -337,7 +350,10 @@
           <div class="example-panel" id="serverless">
             <div class="example-description">
               <h3>Deploy to AWS Lambda</h3>
-              <p>First-class serverless support with DynamoDB multi-tenant isolation.</p>
+              <p>
+                First-class serverless support with DynamoDB multi-tenant
+                isolation.
+              </p>
               <ul class="example-features">
                 <li>DynamoDB multi-tenant backend</li>
                 <li>S3 sync for persistence</li>
@@ -366,7 +382,10 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
           <div class="example-panel" id="frontend">
             <div class="example-description">
               <h3>Type-safe frontend client</h3>
-              <p>Full TypeScript support with intelligent caching and standardized error handling.</p>
+              <p>
+                Full TypeScript support with intelligent caching and
+                standardized error handling.
+              </p>
               <ul class="example-features">
                 <li>100% type coverage</li>
                 <li>Intelligent request caching</li>
@@ -397,7 +416,9 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
       <div class="section-container">
         <div class="section-header">
           <span class="section-badge">Quick Start</span>
-          <h2 class="section-title">Up and running in <span class="gradient-text">under 2 minutes</span></h2>
+          <h2 class="section-title">
+            Up and running in <span class="gradient-text">under 2 minutes</span>
+          </h2>
         </div>
 
         <div class="quickstart-grid">
@@ -411,13 +432,17 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
             <div class="step-number">02</div>
             <h3>Configure</h3>
             <p>Set your OpenRouter API key for AI features (optional).</p>
-            <div class="step-code"><code>export OPENROUTER_API_KEY="sk-..."</code></div>
+            <div class="step-code">
+              <code>export OPENROUTER_API_KEY="sk-..."</code>
+            </div>
           </div>
           <div class="quickstart-step">
             <div class="step-number">03</div>
             <h3>Launch</h3>
             <p>Start the HTTP server with the web UI.</p>
-            <div class="step-code"><code>datafold_http_server --port 9001</code></div>
+            <div class="step-code">
+              <code>datafold_http_server --port 9001</code>
+            </div>
           </div>
           <div class="quickstart-step">
             <div class="step-number">04</div>
@@ -428,22 +453,171 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
         </div>
 
         <div class="quickstart-cta">
-          <a href="https://github.com/shiba4life/fold_db#-quick-start" target="_blank" class="btn btn-primary">
+          <a
+            href="https://github.com/shiba4life/fold_db#-quick-start"
+            target="_blank"
+            class="btn btn-primary"
+          >
             <span>View Full Installation Guide</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"
+              />
             </svg>
           </a>
         </div>
       </div>
     </section>
 
+    <!-- Schema Registry Section -->
+    <section class="schemas-section" id="schemas">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">Registry</span>
+          <h2 class="section-title">
+            Global <span class="gradient-text">Schema Registry</span>
+          </h2>
+          <p class="section-subtitle">
+            Browse the shared schema registry. Click on a schema to view its
+            complete definition including fields and topology structures.
+          </p>
+        </div>
+
+        <!-- Schema Stats -->
+        <div class="schema-stats" id="schemaStatsContainer">
+          <div class="stat">
+            <span class="stat-value" id="schemaCount">—</span>
+            <span class="stat-label">Schemas</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value" id="totalFields">—</span>
+            <span class="stat-label">Total Fields</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value" id="serviceStatus">—</span>
+            <span class="stat-label">Service</span>
+          </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="schemas-toolbar">
+          <div class="search-container">
+            <svg
+              class="search-icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            <input
+              type="text"
+              class="search-input"
+              id="schemaSearch"
+              placeholder="Search schemas..."
+            />
+          </div>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="Single">Single</button>
+            <button class="filter-btn" data-filter="Range">Range</button>
+            <button class="filter-btn" data-filter="HashRange">
+              HashRange
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-container" id="loadingContainer">
+          <div class="loading-spinner"></div>
+          <p>Loading schemas from registry...</p>
+        </div>
+
+        <!-- Error State -->
+        <div class="error-container" id="errorContainer" style="display: none">
+          <div class="error-icon">⚠️</div>
+          <h3>Failed to Load Schemas</h3>
+          <p id="errorMessage">Unable to connect to the schema service.</p>
+          <button class="btn btn-primary" id="retryBtn">Retry</button>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-container" id="emptyContainer" style="display: none">
+          <div class="empty-icon">📭</div>
+          <h3>No Schemas Found</h3>
+          <p>The schema registry is empty or no schemas match your filter.</p>
+        </div>
+
+        <!-- Schema Grid -->
+        <div class="schemas-grid" id="schemasGrid"></div>
+      </div>
+    </section>
+
+    <!-- Schema Detail Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal" id="schemaModal">
+        <div class="modal-header">
+          <div class="modal-title">
+            <h2 id="modalSchemaName">Schema Name</h2>
+            <span class="type-badge" id="modalSchemaType">Single</span>
+          </div>
+          <button class="modal-close" id="modalClose">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Content populated by JavaScript -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="copyJsonBtn">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+            </svg>
+            Copy JSON
+          </button>
+          <button class="btn btn-primary" id="modalCloseBtn">Close</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Architecture Section -->
     <section class="architecture">
       <div class="section-container">
         <div class="section-header">
           <span class="section-badge">Architecture</span>
-          <h2 class="section-title">Built for <span class="gradient-text">scale and flexibility</span></h2>
+          <h2 class="section-title">
+            Built for <span class="gradient-text">scale and flexibility</span>
+          </h2>
         </div>
 
         <div class="arch-diagram">
@@ -485,15 +659,33 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
       <div class="section-container">
         <div class="cta-content">
           <h2>Ready to build something amazing?</h2>
-          <p>Join developers building the next generation of data applications with FoldDB.</p>
+          <p>
+            Join developers building the next generation of data applications
+            with FoldDB.
+          </p>
           <div class="cta-actions">
-            <a href="https://github.com/shiba4life/fold_db" target="_blank" class="btn btn-primary btn-large">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            <a
+              href="https://github.com/shiba4life/fold_db"
+              target="_blank"
+              class="btn btn-primary btn-large"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                />
               </svg>
               <span>Star on GitHub</span>
             </a>
-            <a href="https://docs.rs/datafold" target="_blank" class="btn btn-secondary btn-large">
+            <a
+              href="https://docs.rs/datafold"
+              target="_blank"
+              class="btn btn-secondary btn-large"
+            >
               <span>Read the Docs</span>
             </a>
           </div>
@@ -507,7 +699,9 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
         <div class="footer-brand">
           <a href="#" class="footer-logo">
             <span class="logo-icon">⬡</span>
-            <span class="logo-text">fold<span class="logo-accent">db</span></span>
+            <span class="logo-text"
+              >fold<span class="logo-accent">db</span></span
+            >
           </a>
           <p>The AI-Powered Distributed Data Platform</p>
         </div>
@@ -521,8 +715,12 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
           <div class="footer-column">
             <h4>Resources</h4>
             <a href="https://docs.rs/datafold" target="_blank">Documentation</a>
-            <a href="https://github.com/shiba4life/fold_db" target="_blank">GitHub</a>
-            <a href="https://crates.io/crates/datafold" target="_blank">Crates.io</a>
+            <a href="https://github.com/shiba4life/fold_db" target="_blank"
+              >GitHub</a
+            >
+            <a href="https://crates.io/crates/datafold" target="_blank"
+              >Crates.io</a
+            >
           </div>
           <div class="footer-column">
             <h4>Legal</h4>
