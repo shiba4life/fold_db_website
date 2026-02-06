@@ -552,6 +552,214 @@ img {
     opacity: 0;
   }
 }
+/* Download Section */
+.download {
+  padding: 8rem 0;
+  position: relative;
+}
+
+/* Install Banner */
+.install-banner {
+  background: var(--bg-terminal);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.install-banner-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-light);
+  margin-bottom: 1rem;
+}
+
+.install-banner-command {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.875rem 1.25rem;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.install-banner-command code {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.install-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.install-copy-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+.install-banner-note {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Download Divider */
+.download-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.download-divider::before,
+.download-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.download-divider span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.download-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.download-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.download-card.detected {
+  border-color: var(--accent);
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
+}
+
+.download-card.detected::before {
+  content: "Your platform";
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.platform-icon {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.download-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.download-card p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.btn-sm {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+}
+
+.download-alt {
+  text-align: center;
+}
+
+.download-alt p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.download-alt .step-code {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.download-releases-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--primary-light);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.download-releases-link:hover {
+  color: var(--accent);
+}
+
+/* CLI Section */
+.cli-section {
+  padding: 8rem 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(34, 211, 238, 0.03) 50%,
+    transparent 100%
+  );
+}
+
+.cli-section .example-code code .prompt {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.cli-section .example-code code .command {
+  color: var(--text-primary);
+}
+
 /* Features Section */
 .features {
   padding: 8rem 0;
@@ -1635,6 +1843,12 @@ img {
   }
 }
 
+@media (max-width: 1024px) {
+  .download-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -1674,6 +1888,19 @@ img {
 
   .section-title {
     font-size: 1.75rem;
+  }
+
+  .download-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .install-banner-command {
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .install-banner-command code {
+    font-size: 0.75rem;
   }
 
   .features-grid {

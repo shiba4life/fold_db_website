@@ -4,8 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Tab switching for code examples
   initTabs();
 
+  // Tab switching for CLI section
+  initCliTabs();
+
   // Copy code functionality
   initCopyButtons();
+
+  // Install banner copy button
+  initInstallCopy();
 
   // Smooth scroll for navigation
   initSmoothScroll();
@@ -15,6 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Intersection observer for animations
   initScrollAnimations();
+
+  // Platform detection for download cards
+  initPlatformDetection();
 
   // Schema Registry
   initSchemaRegistry();
@@ -413,6 +422,29 @@ function showToast(message, type = "info") {
   }, 3000);
 }
 
+// Install Banner Copy
+function initInstallCopy() {
+  const btn = document.getElementById("installCopyBtn");
+  const code = document.getElementById("installCommand");
+  if (!btn || !code) return;
+
+  btn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(code.textContent);
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>';
+      btn.style.color = "var(--accent)";
+      btn.style.borderColor = "var(--accent)";
+      setTimeout(() => {
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+        btn.style.color = "";
+        btn.style.borderColor = "";
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  });
+}
+
 // Tab Switching
 function initTabs() {
   const tabButtons = document.querySelectorAll(".tab-btn");
@@ -435,6 +467,58 @@ function initTabs() {
       });
     });
   });
+}
+
+// CLI Tab Switching
+function initCliTabs() {
+  const cliSection = document.getElementById("cli");
+  if (!cliSection) return;
+
+  const tabButtons = cliSection.querySelectorAll("[data-cli-tab]");
+  const panels = cliSection.querySelectorAll(".example-panel");
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetTab = btn.dataset.cliTab;
+
+      tabButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      panels.forEach((panel) => {
+        panel.classList.remove("active");
+        if (panel.id === targetTab) {
+          panel.classList.add("active");
+        }
+      });
+    });
+  });
+}
+
+// Platform Detection for Download Cards
+function initPlatformDetection() {
+  const platform = navigator.platform || "";
+  const userAgent = navigator.userAgent || "";
+  let detected = null;
+
+  if (platform.includes("Mac") || userAgent.includes("Mac")) {
+    // Check for Apple Silicon vs Intel
+    // navigator.platform returns "MacIntel" for both on some browsers,
+    // but we can check for ARM hints or default to Apple Silicon for modern Macs
+    if (userAgent.includes("ARM") || (platform === "MacIntel" && navigator.maxTouchPoints > 0)) {
+      detected = "macos-aarch64";
+    } else {
+      detected = "macos-aarch64"; // Default to Apple Silicon for modern macOS
+    }
+  } else if (platform.includes("Linux") || userAgent.includes("Linux")) {
+    detected = "linux-x86_64";
+  }
+
+  if (detected) {
+    const card = document.querySelector(`.download-card[data-platform="${detected}"]`);
+    if (card) {
+      card.classList.add("detected");
+    }
+  }
 }
 
 // Copy Code to Clipboard
@@ -528,6 +612,14 @@ function initScrollAnimations() {
     step.style.transform = "translateY(20px)";
     step.style.transitionDelay = `${index * 0.1}s`;
     observer.observe(step);
+  });
+
+  // Observe download cards
+  document.querySelectorAll(".download-card").forEach((card, index) => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(20px)";
+    card.style.transitionDelay = `${index * 0.1}s`;
+    observer.observe(card);
   });
 
   // Observe architecture layers

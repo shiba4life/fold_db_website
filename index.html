@@ -32,8 +32,10 @@
           <span class="logo-text">fold<span class="logo-accent">db</span></span>
         </a>
         <div class="nav-links">
+          <a href="#download">Download</a>
           <a href="#features">Features</a>
           <a href="#quickstart">Quick Start</a>
+          <a href="#cli">CLI</a>
           <a href="#examples">Examples</a>
           <a href="#schemas">Schemas</a>
           <a href="https://docs.rs/datafold" target="_blank">Docs</a>
@@ -131,31 +133,32 @@
         <div class="terminal-body">
           <div class="terminal-line">
             <span class="prompt">$</span>
-            <span class="command">cargo install datafold</span>
+            <span class="command">datafold_cli ingest data.json</span>
           </div>
           <div class="terminal-line output">
-            <span class="success">✓</span> Installing datafold v0.1.55
+            <span class="success">✓</span> Schema auto-generated: user_events
           </div>
           <div class="terminal-line output indent">
-            Compiling datafold v0.1.55
-          </div>
-          <div class="terminal-line output indent">
-            <span class="success">Finished</span> release [optimized] target(s)
-            in 42.3s
+            <span class="success">✓</span> 42 records ingested
           </div>
           <div class="terminal-line">
             <span class="prompt">$</span>
-            <span class="command">datafold_http_server --port 9001</span>
+            <span class="command">datafold_cli llm-query "Show purchases over $50"</span>
           </div>
           <div class="terminal-line output">
-            <span class="info">⬡</span> FoldDB Server starting on
-            <span class="highlight">http://localhost:9001</span>
+            <span class="info">⬡</span> Querying with AI...
+          </div>
+          <div class="terminal-line output indent">
+            Found <span class="highlight">7 results</span> in schema
+            <span class="highlight">user_events</span>
+          </div>
+          <div class="terminal-line">
+            <span class="prompt">$</span>
+            <span class="command">datafold_cli smart-folder-scan ~/Documents</span>
           </div>
           <div class="terminal-line output">
-            <span class="success">✓</span> Schema service connected
-          </div>
-          <div class="terminal-line output">
-            <span class="success">✓</span> AI ingestion pipeline ready
+            <span class="success">✓</span> 12 files detected, 3 schemas
+            recommended
           </div>
           <div class="terminal-line">
             <span class="prompt">$</span>
@@ -164,6 +167,96 @@
         </div>
       </div>
     </header>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">Download</span>
+          <h2 class="section-title">
+            Get FoldDB in <span class="gradient-text">seconds</span>
+          </h2>
+          <p class="section-subtitle">
+            Download pre-built binaries for your platform or build from source.
+          </p>
+        </div>
+
+        <div class="install-banner">
+          <div class="install-banner-label">Install with one command</div>
+          <div class="install-banner-command">
+            <code id="installCommand">curl -fsSL https://raw.githubusercontent.com/shiba4life/fold_db/master/install.sh | sh</code>
+            <button class="install-copy-btn" id="installCopyBtn" title="Copy to clipboard">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+              </svg>
+            </button>
+          </div>
+          <p class="install-banner-note">Auto-detects macOS (Apple Silicon / Intel) and Linux x86_64</p>
+        </div>
+
+        <div class="download-divider">
+          <span>or download for your platform</span>
+        </div>
+
+        <div class="download-grid">
+          <div class="download-card" data-platform="macos-aarch64">
+            <div class="platform-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+            </div>
+            <h3>macOS Apple Silicon</h3>
+            <p>M1, M2, M3, M4</p>
+            <div class="download-buttons">
+              <a href="https://github.com/shiba4life/fold_db/releases/latest" target="_blank" class="btn btn-primary btn-sm">CLI</a>
+              <a href="https://github.com/shiba4life/fold_db/releases/latest" target="_blank" class="btn btn-secondary btn-sm">Server</a>
+            </div>
+          </div>
+
+          <div class="download-card" data-platform="macos-x86_64">
+            <div class="platform-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+            </div>
+            <h3>macOS Intel</h3>
+            <p>x86_64</p>
+            <div class="download-buttons">
+              <a href="https://github.com/shiba4life/fold_db/releases/latest" target="_blank" class="btn btn-primary btn-sm">CLI</a>
+              <a href="https://github.com/shiba4life/fold_db/releases/latest" target="_blank" class="btn btn-secondary btn-sm">Server</a>
+            </div>
+          </div>
+
+          <div class="download-card" data-platform="linux-x86_64">
+            <div class="platform-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.368 1.884 1.43.871.074 1.68-.27 2.349-.801.67-.533 1.267-1.141 1.954-1.46.478-.165.851-.142 1.234.198.136.116.29.27.501.4.052.038.141.063.251.063.36 0 .724-.222.999-.667.137-.222.199-.464.166-.668-.033-.213-.168-.398-.359-.535-.517-.37-1.037-.466-1.438-.603-.262-.09-.553-.22-.775-.485a1.12 1.12 0 01-.217-.663c.003-.26.086-.467.183-.661.183-.378.457-.668.679-.981.133-.188.244-.406.275-.653.038-.22-.01-.457-.165-.652l-.003-.003a.96.96 0 00-.116-.123c-.094-.094-.32-.305-.385-.665-.07-.404.047-.853.207-1.283.37-.997.38-2.066 0-3.069-.377-.996-1.085-1.871-2.154-2.533a.42.42 0 00-.069-.046 5.402 5.402 0 00-.5-.22c-.152-.058-.314-.116-.49-.163a7.72 7.72 0 00-.398-.116 7.093 7.093 0 00-.766-.116c-.04-.003-.079-.008-.116-.011h-.002a6.544 6.544 0 00-.93-.047c-.199 0-.4.008-.603.022-.206.018-.413.041-.621.075a5.89 5.89 0 00-.535.116c-.166.047-.327.1-.483.157-.167.058-.323.122-.475.193-.157.074-.31.153-.457.238a5.283 5.283 0 00-.637.44c-.116.094-.226.199-.336.3-.116.105-.222.216-.322.334a5.113 5.113 0 00-.456.6c-.116.174-.224.357-.322.545-.094.188-.186.378-.262.578l-.002.004a6.09 6.09 0 00-.204.574 5.394 5.394 0 00-.15.57c-.042.183-.074.37-.097.558a5.384 5.384 0 00-.04.542c0 .178.004.357.016.535.012.176.033.353.058.524l.002.008c.075.482-.034.83-.224 1.108-.386.562-.89.727-1.233 1.145a.97.97 0 00-.196.473c-.04.248.028.518.16.742.128.218.325.399.575.515.698.315 1.632.228 2.398-.1a.416.416 0 00.067-.037c.146-.094.22-.211.283-.355.072-.156.126-.339.149-.475l.001-.01.001-.015c.007-.08.016-.157.007-.235a.414.414 0 00-.074-.21c-.056-.1-.137-.17-.233-.217-.189-.09-.422-.107-.626-.117-.278-.012-.405-.08-.457-.232-.054-.159-.032-.38.024-.611.055-.225.138-.456.2-.669.072-.247.046-.505-.033-.738l-.003-.004c.095-.21.156-.434.178-.669.025-.289-.011-.581-.081-.862a4.267 4.267 0 00-.211-.657c.05-.112.087-.228.11-.348.044-.227.029-.461-.06-.673a.945.945 0 00-.434-.474c-.239-.122-.52-.126-.762-.084a2.83 2.83 0 00-.603.2z"/>
+              </svg>
+            </div>
+            <h3>Linux</h3>
+            <p>x86_64</p>
+            <div class="download-buttons">
+              <a href="https://github.com/shiba4life/fold_db/releases/latest" target="_blank" class="btn btn-primary btn-sm">CLI</a>
+              <a href="https://github.com/shiba4life/fold_db/releases/latest" target="_blank" class="btn btn-secondary btn-sm">Server</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="download-alt">
+          <p>Or build from source:</p>
+          <div class="step-code">
+            <code>cargo install --git https://github.com/shiba4life/fold_db --bin datafold_cli</code>
+          </div>
+          <a href="https://github.com/shiba4life/fold_db/releases" target="_blank" class="download-releases-link">
+            View all releases
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
 
     <!-- Features Section -->
     <section class="features" id="features">
@@ -476,6 +569,153 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
       </div>
     </section>
 
+    <!-- CLI Section -->
+    <section class="cli-section" id="cli">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">CLI</span>
+          <h2 class="section-title">
+            Full control from <span class="gradient-text">your terminal</span>
+          </h2>
+          <p class="section-subtitle">
+            Ingest data, run queries, and manage schemas without leaving the command line.
+          </p>
+        </div>
+
+        <div class="examples-tabs cli-tabs">
+          <button class="tab-btn active" data-cli-tab="cli-getting-started">Getting Started</button>
+          <button class="tab-btn" data-cli-tab="cli-ingest">Ingest Data</button>
+          <button class="tab-btn" data-cli-tab="cli-query">Query</button>
+          <button class="tab-btn" data-cli-tab="cli-schema">Schema Management</button>
+        </div>
+
+        <div class="examples-content cli-content">
+          <div class="example-panel active" id="cli-getting-started">
+            <div class="example-description">
+              <h3>Check status and explore</h3>
+              <p>
+                Verify your FoldDB instance is running and browse available schemas.
+              </p>
+              <ul class="example-features">
+                <li>Pretty-printed JSON output with <code>-p</code></li>
+                <li>List all loaded schemas</li>
+                <li>Check node health and configuration</li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">terminal</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli status -p</span>
+<span class="comment">{</span>
+<span class="comment">  "status": "ok",</span>
+<span class="comment">  "schemas_loaded": 5,</span>
+<span class="comment">  "data_root": "~/.datafold/data"</span>
+<span class="comment">}</span>
+
+<span class="prompt">$</span> <span class="command">datafold_cli schema-list -p</span>
+<span class="comment">[</span>
+<span class="comment">  "tweets", "contacts", "notes",</span>
+<span class="comment">  "purchases", "bookmarks"</span>
+<span class="comment">]</span></code></pre>
+            </div>
+          </div>
+
+          <div class="example-panel" id="cli-ingest">
+            <div class="example-description">
+              <h3>Ingest any data</h3>
+              <p>
+                Feed JSON files directly, or let Smart Folders auto-detect and ingest data from directories.
+              </p>
+              <ul class="example-features">
+                <li>Single-file JSON ingestion</li>
+                <li>Smart Folder scanning and recommendations</li>
+                <li>Batch ingest with <code>--all-recommended</code></li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">terminal</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli ingest data.json</span>
+<span class="success">✓</span> Schema generated: user_events
+<span class="success">✓</span> 42 records ingested
+
+<span class="prompt">$</span> <span class="command">datafold_cli smart-folder-scan ~/Documents</span>
+<span class="info">⬡</span> 12 files detected, 3 schemas recommended
+
+<span class="prompt">$</span> <span class="command">datafold_cli smart-folder-ingest ~/Documents --all-recommended</span>
+<span class="success">✓</span> Ingested 3 schemas from ~/Documents</code></pre>
+            </div>
+          </div>
+
+          <div class="example-panel" id="cli-query">
+            <div class="example-description">
+              <h3>Query your data</h3>
+              <p>
+                Run structured queries, full-text search, or ask questions in natural language with AI.
+              </p>
+              <ul class="example-features">
+                <li>Field-level structured queries</li>
+                <li>Full-text search across schemas</li>
+                <li>AI-powered natural language queries</li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">terminal</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli query tweets --fields text,author</span>
+<span class="comment">{ "text": "Hello world", "author": "alice" }</span>
+<span class="comment">{ "text": "Rust is great", "author": "bob" }</span>
+
+<span class="prompt">$</span> <span class="command">datafold_cli search "machine learning"</span>
+<span class="info">⬡</span> 4 results across 2 schemas
+
+<span class="prompt">$</span> <span class="command">datafold_cli llm-query "Show me recent purchases over $50"</span>
+<span class="info">⬡</span> Querying with AI...
+Found <span class="highlight">7 results</span> in schema <span class="highlight">purchases</span></code></pre>
+            </div>
+          </div>
+
+          <div class="example-panel" id="cli-schema">
+            <div class="example-description">
+              <h3>Manage schemas</h3>
+              <p>
+                Load, approve, and inspect schemas directly from the CLI.
+              </p>
+              <ul class="example-features">
+                <li>Load schemas from JSON files</li>
+                <li>Approve pending schemas</li>
+                <li>Inspect schema definitions</li>
+              </ul>
+            </div>
+            <div class="example-code">
+              <div class="code-header">
+                <span class="code-lang">terminal</span>
+                <button class="code-copy">Copy</button>
+              </div>
+              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli schema-load</span>
+<span class="success">✓</span> Loaded schema: tweets (pending approval)
+
+<span class="prompt">$</span> <span class="command">datafold_cli schema-approve tweets</span>
+<span class="success">✓</span> Schema "tweets" approved
+
+<span class="prompt">$</span> <span class="command">datafold_cli schema-get tweets -p</span>
+<span class="comment">{</span>
+<span class="comment">  "name": "tweets",</span>
+<span class="comment">  "fields": ["text", "author", "timestamp"],</span>
+<span class="comment">  "status": "approved"</span>
+<span class="comment">}</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Schema Registry Section -->
     <section class="schemas-section" id="schemas">
       <div class="section-container">
@@ -708,8 +948,10 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
         <div class="footer-links">
           <div class="footer-column">
             <h4>Product</h4>
+            <a href="#download">Downloads</a>
             <a href="#features">Features</a>
             <a href="#quickstart">Quick Start</a>
+            <a href="#cli">CLI Reference</a>
             <a href="#examples">Examples</a>
           </div>
           <div class="footer-column">
