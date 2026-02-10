@@ -133,7 +133,7 @@
         <div class="terminal-body">
           <div class="terminal-line">
             <span class="prompt">$</span>
-            <span class="command">datafold_cli ingest data.json</span>
+            <span class="command">folddb ingest run data.json</span>
           </div>
           <div class="terminal-line output">
             <span class="success">✓</span> Schema auto-generated: user_events
@@ -143,7 +143,7 @@
           </div>
           <div class="terminal-line">
             <span class="prompt">$</span>
-            <span class="command">datafold_cli llm-query "Show purchases over $50"</span>
+            <span class="command">folddb query ai "Show purchases over $50"</span>
           </div>
           <div class="terminal-line output">
             <span class="info">⬡</span> Querying with AI...
@@ -154,7 +154,7 @@
           </div>
           <div class="terminal-line">
             <span class="prompt">$</span>
-            <span class="command">datafold_cli smart-folder-scan ~/Documents</span>
+            <span class="command">folddb ingest smart-folder ~/Documents</span>
           </div>
           <div class="terminal-line output">
             <span class="success">✓</span> 12 files detected, 3 schemas
@@ -246,7 +246,7 @@
         <div class="download-alt">
           <p>Or build from source:</p>
           <div class="step-code">
-            <code>cargo install --git https://github.com/shiba4life/fold_db --bin datafold_cli</code>
+            <code>cargo install --git https://github.com/shiba4life/fold_db.git --bin folddb</code>
           </div>
           <a href="https://github.com/shiba4life/fold_db/releases" target="_blank" class="download-releases-link">
             View all releases
@@ -306,11 +306,19 @@
             </p>
           </div>
           <div class="feature-card">
-            <div class="feature-icon">🌐</div>
-            <h3>Distributed P2P</h3>
+            <div class="feature-icon">📂</div>
+            <h3>Smart Folder Ingestion</h3>
             <p>
-              Built-in peer discovery and networking. Scale horizontally without
-              infrastructure changes.
+              Point at a directory and let AI filter, classify, and batch-ingest
+              files automatically.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Encryption at Rest</h3>
+            <p>
+              AES-256-GCM encryption for all stored data. Local keys or AWS KMS
+              for cloud deployments.
             </p>
           </div>
           <div class="feature-card">
@@ -325,7 +333,7 @@
             <div class="feature-icon">☁️</div>
             <h3>Serverless Ready</h3>
             <p>
-              S3-backed storage and DynamoDB support. Deploy to AWS Lambda with
+              DynamoDB + S3 storage backend. Deploy to AWS Lambda with
               zero modifications.
             </p>
           </div>
@@ -338,11 +346,11 @@
             </p>
           </div>
           <div class="feature-card">
-            <div class="feature-icon">🔌</div>
-            <h3>Extensible Adapters</h3>
+            <div class="feature-icon">🌐</div>
+            <h3>Distributed P2P</h3>
             <p>
-              Plugin system for Twitter, Reddit, webhooks, and custom data
-              sources.
+              Built-in peer discovery and networking. Scale horizontally without
+              infrastructure changes.
             </p>
           </div>
         </div>
@@ -607,14 +615,14 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
                 <span class="code-lang">terminal</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli status -p</span>
+              <pre><code><span class="prompt">$</span> <span class="command">folddb status -p</span>
 <span class="comment">{</span>
 <span class="comment">  "status": "ok",</span>
 <span class="comment">  "schemas_loaded": 5,</span>
 <span class="comment">  "data_root": "~/.datafold/data"</span>
 <span class="comment">}</span>
 
-<span class="prompt">$</span> <span class="command">datafold_cli schema-list -p</span>
+<span class="prompt">$</span> <span class="command">folddb schema list -p</span>
 <span class="comment">[</span>
 <span class="comment">  "tweets", "contacts", "notes",</span>
 <span class="comment">  "purchases", "bookmarks"</span>
@@ -639,14 +647,14 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
                 <span class="code-lang">terminal</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli ingest data.json</span>
+              <pre><code><span class="prompt">$</span> <span class="command">folddb ingest run data.json</span>
 <span class="success">✓</span> Schema generated: user_events
 <span class="success">✓</span> 42 records ingested
 
-<span class="prompt">$</span> <span class="command">datafold_cli smart-folder-scan ~/Documents</span>
+<span class="prompt">$</span> <span class="command">folddb ingest smart-folder ~/Documents --scan</span>
 <span class="info">⬡</span> 12 files detected, 3 schemas recommended
 
-<span class="prompt">$</span> <span class="command">datafold_cli smart-folder-ingest ~/Documents --all-recommended</span>
+<span class="prompt">$</span> <span class="command">folddb ingest smart-folder ~/Documents --all-recommended</span>
 <span class="success">✓</span> Ingested 3 schemas from ~/Documents</code></pre>
             </div>
           </div>
@@ -668,14 +676,14 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
                 <span class="code-lang">terminal</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli query tweets --fields text,author</span>
+              <pre><code><span class="prompt">$</span> <span class="command">folddb query run tweets --fields text,author</span>
 <span class="comment">{ "text": "Hello world", "author": "alice" }</span>
 <span class="comment">{ "text": "Rust is great", "author": "bob" }</span>
 
-<span class="prompt">$</span> <span class="command">datafold_cli search "machine learning"</span>
+<span class="prompt">$</span> <span class="command">folddb query search "machine learning"</span>
 <span class="info">⬡</span> 4 results across 2 schemas
 
-<span class="prompt">$</span> <span class="command">datafold_cli llm-query "Show me recent purchases over $50"</span>
+<span class="prompt">$</span> <span class="command">folddb query ai "Show me recent purchases over $50"</span>
 <span class="info">⬡</span> Querying with AI...
 Found <span class="highlight">7 results</span> in schema <span class="highlight">purchases</span></code></pre>
             </div>
@@ -698,13 +706,13 @@ Found <span class="highlight">7 results</span> in schema <span class="highlight"
                 <span class="code-lang">terminal</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="prompt">$</span> <span class="command">datafold_cli schema-load</span>
+              <pre><code><span class="prompt">$</span> <span class="command">folddb schema load tweets.json</span>
 <span class="success">✓</span> Loaded schema: tweets (pending approval)
 
-<span class="prompt">$</span> <span class="command">datafold_cli schema-approve tweets</span>
+<span class="prompt">$</span> <span class="command">folddb schema approve tweets</span>
 <span class="success">✓</span> Schema "tweets" approved
 
-<span class="prompt">$</span> <span class="command">datafold_cli schema-get tweets -p</span>
+<span class="prompt">$</span> <span class="command">folddb schema get tweets -p</span>
 <span class="comment">{</span>
 <span class="comment">  "name": "tweets",</span>
 <span class="comment">  "fields": ["text", "author", "timestamp"],</span>
@@ -876,7 +884,7 @@ Found <span class="highlight">7 results</span> in schema <span class="highlight"
             <div class="arch-items">
               <div class="arch-item">AI Ingestion</div>
               <div class="arch-item">Query Engine</div>
-              <div class="arch-item">Transform Pipeline</div>
+              <div class="arch-item">Encryption</div>
               <div class="arch-item">Schema Manager</div>
             </div>
           </div>

@@ -33,10 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // SCHEMA REGISTRY
 // ============================================
 
-// Dev API Gateway URL for local development
-// TODO: For production deploy, update to https://axo709qs11.execute-api.us-east-1.amazonaws.com
+// Production API Gateway URL
 const SCHEMA_SERVICE_URL =
-  "https://y0q3m6vk75.execute-api.us-west-2.amazonaws.com";
+  "https://axo709qs11.execute-api.us-east-1.amazonaws.com";
 const SCHEMA_API_ENDPOINTS = {
   available: `${SCHEMA_SERVICE_URL}/api/schemas/available`,
   health: `${SCHEMA_SERVICE_URL}/health`,
