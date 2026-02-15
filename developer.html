@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fold DB — Developer</title>
+  <meta name="description" content="Fold DB developer documentation — architecture, code examples, CLI reference, and live schema registry." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+
+<p><a href="index.html" class="link-btn">[← Home]</a></p>
+
+<pre class="ascii">
+####  ##### #   #
+#   # #     #   #
+#   # ###   #   #
+#   # #      # #
+####  #####   #
+</pre>
+
+<h1 class="tagline">Developer Guide</h1>
+
+<p>FoldDB is a personal database that uses AI to automatically organize your data. Drop in files, JSON, or social media exports — FoldDB detects schemas, extracts searchable keywords, and lets you query with natural language.</p>
+
+<p class="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+
+<!-- QUICK START -->
+<div class="section-amber">
+<h2 id="quickstart"><span class="bold">QUICK START</span> <span class="dim">Up and running in minutes</span></h2>
+
+<div style="display:flex;flex-direction:column;gap:1em;margin:1em 0;">
+<div class="card"><p><span class="label label-yellow">1. INSTALL</span></p>
+<pre>curl -fsSL https://raw.githubusercontent.com/shiba4life/fold_db/master/install.sh | sh</pre>
+<p class="dim">Auto-detects macOS (Apple Silicon / Intel) and Linux x86_64</p>
+<p>Or from source:</p>
+<pre>cargo install --git https://github.com/shiba4life/fold_db.git --bin folddb</pre></div>
+
+<div class="card"><p><span class="label label-yellow">2. CONFIGURE</span></p>
+<pre>export FOLD_OPENROUTER_API_KEY="sk-..."</pre>
+<p class="dim">Required for AI-powered ingestion and natural language queries</p></div>
+
+<div class="card"><p><span class="label label-yellow">3. RUN</span></p>
+<pre>./run.sh --local</pre>
+<p class="dim">Web UI at localhost:5173 · Backend at port 9001</p>
+<pre>./run.sh --local --local-schema  # Fully offline
+./run.sh --local --empty-db      # Fresh database
+./run.sh --local --dev           # Dev schema service</pre></div>
+</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section-slate">
+<h2 id="architecture"><span class="bold">HOW IT WORKS</span> <span class="dim">The ingestion-to-query pipeline</span></h2>
+
+<pre class="compare-table">
+Files / JSON / APIs
+       |
+       v
+  AI Ingestion -----> Schema Service (detects or creates schema)
+       |
+       v
+  Mutation ----------> Storage (Sled local or DynamoDB cloud)
+       |
+       v
+  Keyword Indexing --> AI extracts and normalizes searchable terms
+       |
+       v
+  Query -------------> Natural language or structured field queries
+</pre>
+
+<div class="grid-3">
+<div class="card"><p><span class="label label-blue">INGEST</span></p><p>
+Send data in any format. AI analyzes the structure and maps it to a schema automatically.</p></div>
+
+<div class="card"><p><span class="label label-blue">SCHEMA</span></p><p>
+The global schema service at <a href="https://schema.folddb.com" target="_blank">schema.folddb.com</a> checks for existing compatible schemas or creates new ones.</p></div>
+
+<div class="card"><p><span class="label label-blue">STORE</span></p><p>
+Data is written as mutations with AES-256-GCM encryption at rest. Local keys or AWS KMS.</p></div>
+
+<div class="card"><p><span class="label label-blue">INDEX</span></p><p>
+AI extracts keywords and normalizes terms (dates, names, etc.) for search.</p></div>
+
+<div class="card"><p><span class="label label-blue">QUERY</span></p><p>
+Search with natural language or structured field queries. Schema-aware planning for efficient retrieval.</p></div>
+
+<div class="card"><p><span class="label label-blue">PERMISSIONS</span></p><p>
+Trust-based access control at the field level. Multi-tenant isolation enforced at the storage layer.</p></div>
+</div>
+</div>
+
+<!-- CODE EXAMPLES -->
+<div class="section-rose">
+<h2 id="code"><span class="bold">CODE EXAMPLES</span> <span class="dim">Rust and TypeScript APIs</span></h2>
+
+<div class="grid-2">
+<div class="card">
+<p><span class="label label-red">RUST — AI INGESTION</span></p>
+<pre>use fold_db::{IngestionConfig, IngestionCore, IngestionRequest};
+use serde_json::json;
+
+let config = IngestionConfig::from_env_allow_empty();
+let ingestion = IngestionCore::new(config)?;
+
+let data = json!({
+    "name": "John Doe",
+    "email": "john@example.com",
+    "age": 30
+});
+
+let result = ingestion.process_json_ingestion(
+    IngestionRequest { data }
+).await?;</pre>
+</div>
+
+<div class="card">
+<p><span class="label label-red">RUST — NATURAL LANGUAGE QUERY</span></p>
+<pre>use fold_db::FoldNode;
+
+let node = FoldNode::new_with_defaults().await?;
+
+// Natural language query
+let response = node.ai_query(
+    "Show me all purchases over $50"
+).await?;</pre>
+</div>
+
+<div class="card">
+<p><span class="label label-red">RUST — SERVERLESS (LAMBDA + DYNAMODB)</span></p>
+<pre>use fold_db::lambda::{
+    LambdaConfig, LambdaContext,
+    LambdaStorage, LambdaLogging
+};
+use fold_db::storage::{DynamoDbConfig, ExplicitTables};
+
+let config = LambdaConfig::new(
+    LambdaStorage::DynamoDb(DynamoDbConfig {
+        region: "us-east-1".to_string(),
+        tables: ExplicitTables::from_prefix("MyApp"),
+        auto_create: true,
+        user_id: None,
+    }),
+    LambdaLogging::Stdout,
+);
+
+LambdaContext::init(config).await?;
+// Creates 11 DynamoDB tables with multi-tenant isolation</pre>
+</div>
+
+<div class="card">
+<p><span class="label label-red">TYPESCRIPT — FRONTEND CLIENTS</span></p>
+<pre>import {
+  schemaClient,
+  securityClient,
+  systemClient
+} from "../api/clients";
+
+// Schema operations with automatic caching
+const response = await schemaClient.getSchemas();
+if (response.success) {
+  const schemas = response.data; // Fully typed
+}
+
+// System monitoring with 30-second cache
+const status = await systemClient.getSystemStatus();</pre>
+<p class="dim">Available clients: SchemaClient · SecurityClient · SystemClient · TransformClient · IngestionClient · MutationClient</p>
+</div>
+</div>
+</div>
+
+<!-- CLI REFERENCE -->
+<div class="section-sage">
+<h2 id="cli"><span class="bold">CLI REFERENCE</span> <span class="dim">folddb command line</span></h2>
+
+<div class="grid-2">
+<div class="card">
+<p><span class="label label-green">STATUS &amp; SCHEMAS</span></p>
+<pre>folddb status -p                       # Node health
+folddb schema list -p                  # List all schemas
+folddb schema load schema.json         # Load a schema
+folddb schema approve my_schema        # Approve pending
+folddb schema get my_schema -p         # Inspect schema</pre>
+</div>
+
+<div class="card">
+<p><span class="label label-green">INGEST</span></p>
+<pre>folddb ingest run data.json            # Ingest JSON file
+folddb ingest smart-folder ~/Documents --scan
+                                       # Scan a directory
+folddb ingest smart-folder ~/Documents --all-recommended
+                                       # Batch ingest</pre>
+</div>
+
+<div class="card">
+<p><span class="label label-green">QUERY</span></p>
+<pre>folddb query run tweets --fields text,author
+                                       # Structured query
+folddb query search "machine learning" # Full-text search
+folddb query ai "recent purchases"     # Natural language</pre>
+</div>
+
+<div class="card">
+<p><span class="label label-green">DEVELOPMENT</span></p>
+<pre>git clone https://github.com/shiba4life/fold_db
+cd fold_db
+cargo build --release --workspace
+cargo test --workspace
+cargo build --features ts-bindings     # TS bindings</pre>
+</div>
+</div>
+</div>
+
+<!-- CONFIGURATION -->
+<div class="section-amber">
+<h2 id="config"><span class="bold">CONFIGURATION</span> <span class="dim">Environment variables</span></h2>
+
+<pre class="compare-table">
+VARIABLE                         PURPOSE
+─────────────────────────────────────────────────────────────────
+FOLD_OPENROUTER_API_KEY          API key for AI ingestion
+DATAFOLD_SCHEMA_SERVICE_URL      Schema service (default: schema.folddb.com)
+DATAFOLD_CONFIG                  Path to config file
+DATAFOLD_LOG_LEVEL               trace | debug | info | warn | error
+DATAFOLD_STORAGE_MODE            Storage backend ("s3" for cloud)
+DATAFOLD_S3_BUCKET               S3 bucket for database storage
+DATAFOLD_S3_REGION               AWS region for S3
+DATAFOLD_UPLOAD_STORAGE_MODE     Upload storage ("s3" for cloud)
+</pre>
+</div>
+
+<!-- SCHEMA REGISTRY -->
+<div class="section-lavender">
+<h2 id="schemas"><span class="bold">SCHEMA REGISTRY</span> <span class="dim">Live from schema.folddb.com</span></h2>
+
+<p>Browse the global schema registry. Schemas define data structure, permissions, and topology for interoperability across nodes. During ingestion, AI checks this registry for compatible schemas before creating new ones.</p>
+
+<p>
+  <span class="bold" id="schemaCount">—</span> schemas
+  <span class="dim">|</span>
+  <span class="bold" id="totalFields">—</span> total fields
+  <span class="dim">|</span>
+  service: <span class="bold" id="serviceStatus">checking...</span>
+</p>
+
+<p>
+  <button class="filter-btn active" data-filter="all">[All]</button>
+  <button class="filter-btn" data-filter="Single">[Single]</button>
+  <button class="filter-btn" data-filter="Range">[Range]</button>
+  <button class="filter-btn" data-filter="HashRange">[HashRange]</button>
+</p>
+
+<div id="loadingContainer" class="dim"><p>Loading schemas from registry...</p></div>
+<div id="errorContainer" style="display:none"><p>Failed to load schemas. <span class="link-btn" id="retryBtn" style="cursor:pointer">[Retry]</span></p></div>
+<div id="emptyContainer" style="display:none"><p class="dim">No schemas found.</p></div>
+
+<div id="schemasGrid" class="grid-3"></div>
+</div>
+
+<!-- SCHEMA DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <p>
+      <span class="bold" id="modalSchemaName">Schema Name</span>
+      <span class="label label-purple" id="modalSchemaType">Single</span>
+      <span class="link-btn" id="modalClose" style="cursor:pointer; float:right">[Close]</span>
+    </p>
+    <div id="modalBody"></div>
+    <p>
+      <span class="link-btn" id="copyJsonBtn" style="cursor:pointer">[Copy JSON]</span>
+      <span class="link-btn" id="modalCloseBtn" style="cursor:pointer">[Close]</span>
+    </p>
+  </div>
+</div>
+
+<!-- DOCUMENTATION LINKS -->
+<div class="section-slate">
+<h2 id="docs"><span class="bold">DOCUMENTATION</span> <span class="dim">Deeper reading</span></h2>
+
+<div class="grid-2">
+<div class="card"><p><span class="label label-blue">API REFERENCE</span></p><p>
+Complete Rust API docs on <a href="https://docs.rs/fold_db" target="_blank">docs.rs/fold_db</a></p></div>
+
+<div class="card"><p><span class="label label-blue">INGESTION GUIDE</span></p><p>
+AI-powered data ingestion — <a href="https://github.com/shiba4life/fold_db/blob/main/INGESTION_README.md" target="_blank">INGESTION_README.md</a></p></div>
+
+<div class="card"><p><span class="label label-blue">AI QUERY GUIDE</span></p><p>
+Natural language queries — <a href="https://github.com/shiba4life/fold_db/blob/main/docs/AI_QUERY_USAGE_GUIDE.md" target="_blank">AI_QUERY_USAGE_GUIDE.md</a></p></div>
+
+<div class="card"><p><span class="label label-blue">ARCHITECTURE</span></p><p>
+System design and patterns — <a href="https://github.com/shiba4life/fold_db/blob/main/docs/Unified_Architecture.md" target="_blank">Unified_Architecture.md</a></p></div>
+</div>
+</div>
+
+<p class="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+
+<p><span class="bold white">folddb</span> <span class="dim">v0.1.0  Dual-licensed MIT / Apache 2.0</span><br>
+<span class="dim">PROJECT</span>  <a href="https://github.com/shiba4life/fold_db" target="_blank">GitHub</a>  <a href="https://github.com/shiba4life/fold_db/blob/main/docs/GOAL.md" target="_blank">GOAL.md</a>  <a href="https://docs.rs/fold_db" target="_blank">docs.rs</a><br>
+<span class="dim">LINKS</span>    <a href="https://schema.folddb.com" target="_blank">Schema Registry</a>  <a href="https://github.com/shiba4life/fold_db/issues" target="_blank">Issues</a>  <a href="https://github.com/shiba4life/fold_db/discussions" target="_blank">Discussions</a><br>
+<span class="dim">© 2025 Fold DB — Built in the open</span></p>
+
+</div>
+<script src="developer.js"></script>
+</body>
+</html>
