@@ -38,7 +38,7 @@
           <a href="#cli">CLI</a>
           <a href="#examples">Examples</a>
           <a href="#schemas">Schemas</a>
-          <a href="https://docs.rs/datafold" target="_blank">Docs</a>
+          <a href="https://docs.rs/fold_db" target="_blank">Docs</a>
           <a
             href="https://github.com/shiba4life/fold_db"
             target="_blank"
@@ -400,7 +400,7 @@
                 <span class="code-lang">rust</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="keyword">use</span> datafold::{IngestionCore, IngestionConfig};
+              <pre><code><span class="keyword">use</span> fold_db::{IngestionCore, IngestionConfig};
 <span class="keyword">use</span> serde_json::json;
 
 <span class="keyword">let</span> config = IngestionConfig::from_env()?;
@@ -433,9 +433,9 @@
                 <span class="code-lang">rust</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="keyword">use</span> datafold::DataFoldNode;
+              <pre><code><span class="keyword">use</span> fold_db::FoldNode;
 
-<span class="keyword">let</span> node = DataFoldNode::new_with_defaults().<span class="keyword">await</span>?;
+<span class="keyword">let</span> node = FoldNode::new_with_defaults().<span class="keyword">await</span>?;
 
 <span class="comment">// Natural language query</span>
 <span class="keyword">let</span> response = node.ai_query(
@@ -466,7 +466,7 @@
                 <span class="code-lang">rust</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="keyword">use</span> datafold::lambda::{LambdaConfig, LambdaContext};
+              <pre><code><span class="keyword">use</span> fold_db::lambda::{LambdaConfig, LambdaContext};
 
 <span class="keyword">let</span> config = LambdaConfig::new(
     LambdaStorage::DynamoDb(DynamoDbConfig {
@@ -498,7 +498,7 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
                 <span class="code-lang">typescript</span>
                 <button class="code-copy">Copy</button>
               </div>
-              <pre><code><span class="keyword">import</span> { schemaClient } <span class="keyword">from</span> <span class="string">'@datafold/client'</span>;
+              <pre><code><span class="keyword">import</span> { schemaClient } <span class="keyword">from</span> <span class="string">'fold-node-ui'</span>;
 
 <span class="keyword">const</span> response = <span class="keyword">await</span> schemaClient.getSchemas();
 
@@ -527,7 +527,7 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
             <div class="step-number">01</div>
             <h3>Install</h3>
             <p>Install via Cargo or download a pre-built binary.</p>
-            <div class="step-code"><code>cargo install datafold</code></div>
+            <div class="step-code"><code>cargo install fold_db</code></div>
           </div>
           <div class="quickstart-step">
             <div class="step-number">02</div>
@@ -542,7 +542,7 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
             <h3>Launch</h3>
             <p>Start the HTTP server with the web UI.</p>
             <div class="step-code">
-              <code>datafold_http_server --port 9001</code>
+              <code>folddb_server --port 9001</code>
             </div>
           </div>
           <div class="quickstart-step">
@@ -619,7 +619,7 @@ LambdaContext::init(config).<span class="keyword">await</span>?;</code></pre>
 <span class="comment">{</span>
 <span class="comment">  "status": "ok",</span>
 <span class="comment">  "schemas_loaded": 5,</span>
-<span class="comment">  "data_root": "~/.datafold/data"</span>
+<span class="comment">  "data_root": "~/.fold_db/data"</span>
 <span class="comment">}</span>
 
 <span class="prompt">$</span> <span class="command">folddb schema list -p</span>
@@ -930,7 +930,7 @@ Found <span class="highlight">7 results</span> in schema <span class="highlight"
               <span>Star on GitHub</span>
             </a>
             <a
-              href="https://docs.rs/datafold"
+              href="https://docs.rs/fold_db"
               target="_blank"
               class="btn btn-secondary btn-large"
             >
@@ -964,11 +964,11 @@ Found <span class="highlight">7 results</span> in schema <span class="highlight"
           </div>
           <div class="footer-column">
             <h4>Resources</h4>
-            <a href="https://docs.rs/datafold" target="_blank">Documentation</a>
+            <a href="https://docs.rs/fold_db" target="_blank">Documentation</a>
             <a href="https://github.com/shiba4life/fold_db" target="_blank"
               >GitHub</a
             >
-            <a href="https://crates.io/crates/datafold" target="_blank"
+            <a href="https://crates.io/crates/fold_db" target="_blank"
               >Crates.io</a
             >
           </div>
