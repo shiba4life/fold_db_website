@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldDB Icon Animation</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #111; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'IBM Plex Mono', monospace; }
+    .wrap { text-align: center; }
+    canvas { display: block; margin: 0 auto; }
+    .label { color: #555; font-size: 13px; margin-top: 18px; letter-spacing: 3px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <canvas id="c"></canvas>
+  <p class="label">FOLD → DB</p>
+</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+const S = 400;
+canvas.width = S * dpr; canvas.height = S * dpr;
+canvas.style.width = S + 'px'; canvas.style.height = S + 'px';
+ctx.scale(dpr, dpr);
+
+const CX = S / 2, CY = S / 2;
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+function ease(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
+
+// Colors
+const COLORS = ['#E53935', '#FF9800', '#FDD835']; // red, orange, yellow
+const LINE_W = 3;
+
+// ── Shape definitions ──
+
+// START: rounded rectangle
+const RECT_W  = 60;  // half-width  → same as circle radius
+const RECT_H  = 30;  // half-height → matches circle after scaleY(0.5)
+const RECT_R  = 14;  // corner radius
+
+// END: full circle, visually squished with scaleY(0.5)
+const CIRCLE_R = 60;   // radius → 120px diameter (perfect circle before scaling)
+const SCALE_Y  = 0.5;  // vertical squish factor
+
+// Vertical offsets — tighter stacking for more overlap
+const OFFSETS_RECT   = [-36, 0, 36];
+const OFFSETS_CIRCLE = [-34, 0, 34];
+
+// ── Per-shape timeline ──
+// Each shape spins+morphs one at a time (sequentially).
+// Timeline (symmetric):
+//   0.00–0.06: hold rects
+//   0.06–0.22: shape 0 (red)    spins 360° + morphs to circle
+//   0.22–0.38: shape 1 (orange) spins 360° + morphs to circle
+//   0.38–0.54: shape 2 (yellow) spins 360° + morphs to circle
+//   0.54–0.62: hold circles
+//   0.62–0.78: shape 2 spins back
+//   0.78–0.94: shape 1 spins back
+//   0.94–1.00  (wraps): shape 0 handled specially below
+// We'll use a simpler parameterization below.
+
+const SPIN_DUR = 0.14;   // fraction of loop each shape takes to spin
+const HOLD_RECT = 0.06;  // hold at start
+const HOLD_CIRC = 0.08;  // hold at circle state
+
+// Forward spin windows: shape i spins during [start, start + SPIN_DUR]
+const FWD_START = [
+  HOLD_RECT,
+  HOLD_RECT + SPIN_DUR,
+  HOLD_RECT + SPIN_DUR * 2
+];
+// After all 3 forward spins + hold, reverse spins (in reverse order: 2, 1, 0)
+const REV_BEGIN = HOLD_RECT + SPIN_DUR * 3 + HOLD_CIRC;
+const REV_START = [
+  REV_BEGIN + SPIN_DUR * 2,  // shape 0 reverses last
+  REV_BEGIN + SPIN_DUR,      // shape 1
+  REV_BEGIN                  // shape 2 reverses first
+];
+
+// Get per-shape morph t (0→1) and rotation angle
+function getShapeState(p, i) {
+  // Forward spin
+  const fs = FWD_START[i];
+  const fe = fs + SPIN_DUR;
+  // Reverse spin
+  const rs = REV_START[i];
+  const re = rs + SPIN_DUR;
+
+  let t, rot;
+
+  if (p < fs) {
+    // Before this shape's forward spin
+    t = 0; rot = 0;
+  } else if (p < fe) {
+    // During forward spin
+    const raw = ease((p - fs) / SPIN_DUR);
+    t = raw;
+    rot = raw * Math.PI * 2;  // 360°
+  } else if (p < rs) {
+    // Between forward and reverse — fully morphed
+    t = 1; rot = 0;
+  } else if (p < re) {
+    // During reverse spin
+    const raw = ease((p - rs) / SPIN_DUR);
+    t = 1 - raw;
+    rot = raw * Math.PI * 2;  // spin 360° again on the way back
+  } else {
+    // After reverse — back to rect
+    t = 0; rot = 0;
+  }
+
+  return { t, rot };
+}
+
+function drawShape(cx, cy, hw, hh, r, color, sy, rot, t) {
+  const clampR = Math.min(r, hw, hh);
+  const L = cx - hw, R = cx + hw, T = cy - hh, B = cy + hh;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(rot);
+  ctx.scale(1, sy);
+  ctx.translate(-cx, -cy);
+
+  ctx.beginPath();
+  ctx.moveTo(L + clampR, T);
+  ctx.lineTo(R - clampR, T);
+  ctx.arcTo(R, T, R, T + clampR, clampR);
+  ctx.lineTo(R, B - clampR);
+  ctx.arcTo(R, B, R - clampR, B, clampR);
+  ctx.lineTo(L + clampR, B);
+  ctx.arcTo(L, B, L, B - clampR, clampR);
+  ctx.lineTo(L, T + clampR);
+  ctx.arcTo(L, T, L + clampR, T, clampR);
+  ctx.closePath();
+
+  if (t > 0) {
+    ctx.globalAlpha = t;
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  ctx.globalAlpha = 1;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = LINE_W;
+  ctx.stroke();
+  ctx.restore();
+}
+
+function draw(p) {
+  ctx.clearRect(0, 0, S, S);
+
+  // Draw back to front (yellow at bottom, orange middle, red on top)
+  for (let i = 2; i >= 0; i--) {
+    const { t, rot } = getShapeState(p, i);
+
+    const hw = lerp(RECT_W, CIRCLE_R, t);
+    const hh = lerp(RECT_H, CIRCLE_R, t);
+    const r  = lerp(RECT_R, CIRCLE_R, t);
+    const sy = lerp(1, SCALE_Y, t);
+    const cy = CY + lerp(OFFSETS_RECT[i], OFFSETS_CIRCLE[i], t);
+
+    drawShape(CX, cy, hw, hh, r, COLORS[i], sy, rot, t);
+  }
+}
+
+// ── Animation loop ──
+const DUR = 6000;
+let t0 = null;
+function tick(ts) {
+  if (!t0) t0 = ts;
+  draw(((ts - t0) % DUR) / DUR);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

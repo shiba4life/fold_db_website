@@ -7,27 +7,21 @@
   <meta name="description" content="Fold DB is building a new model for personal data — one where your data stays yours, accessed only on your terms, mediated by AI that works for you." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <div class="page">
 
-<pre class="ascii">
-###############     #########    ####             ############              ############     ############
-###############::  ###########:  ####:            #############             #############    #############
-###############:: ####:::::####: ####::           ####::::::####:           ####::::::####:  ####::::::####:
-####::::::::::::####::::   ####::####:::          ####:::    ####::         ####:::    ####::####:::    ####::
-####::          ####::     ####::####::           ####::     ####::         ####::     ####::####::    ####:::
-####::          ####::     ####::####::           ####::     ####::         ####::     ####::############::::
-############    ####::     ####::####::           ####::     ####::         ####::     ####::############::
-############::  ####::     ####::####::           ####::     ####::         ####::     ####::####::::::####
-####::::::::::  ####::     ####::####::           ####::     ####::         ####::     ####::####::     ####:
-####::          ####::     ####::####::           ####::     ####::         ####::     ####::####::     ####::
-####::           ####:    ####:::####::           ####::    ####:::         ####::    ####:::####::    ####:::
-####::            ###########::: ###############  #############:::          #############::: #############:::
-####::             #########:::  ###############::############:::           ############:::  ############:::
-  ::::               :::::::::     :::::::::::::::  ::::::::::::              ::::::::::::     ::::::::::::
-</pre>
+<nav style="display:flex;align-items:center;gap:10px;padding:6px 0;margin-bottom:12px;">
+  <canvas id="logo" style="display:block;"></canvas>
+  <a href="index.html" style="color:#ebdbb2;text-decoration:none;font-weight:700;font-size:16px;letter-spacing:1px;">FoldDB</a>
+  <span style="flex:1"></span>
+  <a href="developer.html" class="link-btn">[Developer]</a>
+  <a href="https://github.com/shiba4life/fold_db" target="_blank" class="link-btn">[GitHub]</a>
+</nav>
+
+<pre class="ascii" id="ascii-title"></pre>
 <br>
 <p class="typing-line">&gt; <span id="typed"></span><span class="cursor">█</span></p>
 /////////////////////////////////////////////////////////////////
@@ -159,6 +153,12 @@ cd fold_db</pre></div>
 <span class="dim">© 2025 Fold DB — Built in the open</span></p>
 
 </div>
+<script src="logo-animation.js"></script>
+<script src="ascii-generator.js"></script>
 <script src="script.js"></script>
+<script>
+initLogoAnimation(document.getElementById('logo'), 64);
+renderResponsiveAscii(document.getElementById('ascii-title'));
+</script>
 </body>
 </html>
