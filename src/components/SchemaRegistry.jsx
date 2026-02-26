@@ -98,11 +98,9 @@ export default function SchemaRegistry() {
   function renderModalBody(schema) {
     const fields = schema.fields || [];
     const transforms = schema.transform_fields ? Object.entries(schema.transform_fields) : [];
-    const hash = schema.topology_hash || 'N/A';
 
     return (
       <>
-        <p className="dim">Topology hash: {hash}</p>
         {fields.length > 0 && (
           <>
             <p><span className="bold">Fields</span></p>
@@ -168,12 +166,11 @@ export default function SchemaRegistry() {
             const allFields = [...fields, ...transforms];
             const displayFields = allFields.slice(0, 4);
             const moreCount = allFields.length - displayFields.length;
-            const hash = (schema.topology_hash || 'N/A').substring(0, 12);
 
             return (
               <Card key={name} className="schema-card" style={{ cursor: 'pointer' }} onClick={() => setModalSchema(schema)}>
                 <p><Label color="green">{name}</Label> <span className="dim">{type}</span></p>
-                <p className="dim">{allFields.length} field{allFields.length !== 1 ? 's' : ''} &middot; hash: {hash}&hellip;</p>
+                <p className="dim">{allFields.length} field{allFields.length !== 1 ? 's' : ''}</p>
                 {displayFields.length > 0 && (
                   <p>
                     {displayFields.map(f => (

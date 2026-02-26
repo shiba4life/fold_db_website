@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <p>
       <span className="bold white">folddb</span>{' '}
-      <span className="dim">v0.1.0  Open source. Data sovereignty for everyone.</span>
+      <span className="dim">v0.3.0  Open source. Data sovereignty for everyone.</span>
       <br />
       <span className="dim">PROJECT</span>{'  '}
       <a href="https://github.com/shiba4life/fold_db" target="_blank" rel="noreferrer">GitHub</a>{'  '}

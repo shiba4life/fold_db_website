@@ -353,7 +353,7 @@ FOLD_UPLOAD_STORAGE_MODE         Upload storage ("s3" for cloud)`}</pre>
       <Section variant="lavender">
         <h2 id="schemas"><span className="bold">SCHEMA REGISTRY</span> <span className="dim">Live from schema.folddb.com</span></h2>
 
-        <p>Browse the global schema registry. Schemas define data structure, permissions, and topology for interoperability across nodes. During ingestion, AI checks this registry for compatible schemas before creating new ones.</p>
+        <p>Browse the global schema registry. Schemas define data structure and permissions for interoperability across nodes. During ingestion, AI checks this registry for compatible schemas before creating new ones.</p>
 
         <SchemaRegistry />
       </Section>
