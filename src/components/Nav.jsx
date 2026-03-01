@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AnimatedLogo from './AnimatedLogo';
 
@@ -10,18 +11,29 @@ const NAV_LINKS = [
 
 export default function Nav() {
   const { pathname } = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '6px 0', marginBottom: '12px' }}>
-      <AnimatedLogo size={64} />
-      <Link to="/" style={{ color: '#ebdbb2', textDecoration: 'none', fontWeight: 700, fontSize: '16px', letterSpacing: '1px' }}>
-        FoldDB
+    <nav className="site-nav" aria-label="Main navigation">
+      <Link to="/" className="nav-brand">
+        <AnimatedLogo size={64} />
+        <span className="nav-brand-text">FoldDB</span>
       </Link>
-      <span style={{ flex: 1 }} />
-      {NAV_LINKS.filter(link => link.to !== pathname).map(link => (
-        <Link key={link.to} to={link.to} className="link-btn">[{link.label}]</Link>
-      ))}
-      <a href="https://github.com/shiba4life/fold_db" target="_blank" rel="noreferrer" className="link-btn">[GitHub]</a>
+      <span className="nav-spacer" />
+      <button
+        className="nav-toggle"
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-expanded={menuOpen}
+        aria-label="Toggle navigation menu"
+      >
+        {menuOpen ? '\u2715' : '\u2630'}
+      </button>
+      <div className={`nav-links${menuOpen ? ' open' : ''}`}>
+        {NAV_LINKS.filter(link => link.to !== pathname).map(link => (
+          <Link key={link.to} to={link.to} className="link-btn" onClick={() => setMenuOpen(false)}>[{link.label}]</Link>
+        ))}
+        <a href="https://github.com/shiba4life/fold_db" target="_blank" rel="noreferrer" className="link-btn">[GitHub]</a>
+      </div>
     </nav>
   );
 }

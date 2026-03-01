@@ -97,15 +97,43 @@ export default function AnimatedLogo({ size = 32 }) {
 
     const DUR = 6000;
     let t0 = null;
-    let rafId;
+    let rafId = null;
+    let isVisible = true;
+
     function tick(ts) {
+      if (!isVisible) { rafId = null; return; }
       if (!t0) t0 = ts;
       draw(((ts - t0) % DUR) / DUR);
       rafId = requestAnimationFrame(tick);
     }
-    rafId = requestAnimationFrame(tick);
 
-    return () => cancelAnimationFrame(rafId);
+    function startAnimation() {
+      if (rafId === null) {
+        t0 = null;
+        rafId = requestAnimationFrame(tick);
+      }
+    }
+
+    // Draw first frame immediately
+    draw(0);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          startAnimation();
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(canvas);
+    startAnimation();
+
+    return () => {
+      observer.disconnect();
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [size]);
 
   return <canvas ref={canvasRef} style={{ display: 'block' }} />;

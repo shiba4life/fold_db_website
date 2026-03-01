@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Section from '../components/Section';
 import Card from '../components/Card';
 import Label from '../components/Label';
@@ -7,6 +8,13 @@ import SchemaRegistry from '../components/SchemaRegistry';
 export default function Developer() {
   return (
     <>
+      <Helmet>
+        <title>Developer Guide - Fold DB</title>
+        <meta name="description" content="FoldDB developer documentation. REST API reference, CLI commands, code examples, and architecture overview." />
+        <meta property="og:title" content="Developer Guide - Fold DB" />
+        <meta property="og:description" content="FoldDB developer documentation. REST API, CLI, code examples, and architecture." />
+        <link rel="canonical" href="https://folddb.com/developer" />
+      </Helmet>
       <p><Link to="/" className="link-btn">[&larr; Home]</Link></p>
 
       <pre className="ascii">{`
@@ -20,13 +28,13 @@ export default function Developer() {
 
       <p>FoldDB is a personal database that uses AI to automatically organize your data. Drop in files, JSON, or social media exports &mdash; FoldDB detects schemas, extracts searchable keywords, and lets you query with natural language.</p>
 
-      <p className="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+      <hr className="decorative-rule" aria-hidden="true" />
 
       {/* QUICK START */}
       <Section variant="amber">
         <h2 id="quickstart"><span className="bold">QUICK START</span> <span className="dim">Up and running in 5 minutes</span></h2>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1em', margin: '1em 0' }}>
+        <div className="card-stack">
           <Card><p><Label color="yellow">1. INSTALL</Label></p>
             <pre>curl -fsSL https://raw.githubusercontent.com/shiba4life/fold_db/master/install.sh | sh</pre>
             <p className="dim">Auto-detects macOS (Apple Silicon / Intel) and Linux x86_64</p>
@@ -392,17 +400,17 @@ npm run lint                           # ESLint`}</pre>
             Rust source code and API on <a href="https://github.com/shiba4life/fold_db" target="_blank" rel="noreferrer">GitHub</a></p></Card>
 
           <Card><p><Label color="blue">INGESTION GUIDE</Label></p><p>
-            AI-powered data ingestion &mdash; <a href="https://github.com/shiba4life/fold_db/blob/mainline/INGESTION_README.md" target="_blank" rel="noreferrer">INGESTION_README.md</a></p></Card>
+            AI-powered data ingestion &mdash; <a href="https://github.com/shiba4life/fold_db/blob/master/INGESTION_README.md" target="_blank" rel="noreferrer">INGESTION_README.md</a></p></Card>
 
           <Card><p><Label color="blue">AI QUERY GUIDE</Label></p><p>
-            Natural language queries &mdash; <a href="https://github.com/shiba4life/fold_db/blob/mainline/docs/AI_QUERY_USAGE_GUIDE.md" target="_blank" rel="noreferrer">AI_QUERY_USAGE_GUIDE.md</a></p></Card>
+            Natural language queries &mdash; <a href="https://github.com/shiba4life/fold_db/blob/master/docs/AI_QUERY_USAGE_GUIDE.md" target="_blank" rel="noreferrer">AI_QUERY_USAGE_GUIDE.md</a></p></Card>
 
           <Card><p><Label color="blue">ARCHITECTURE</Label></p><p>
-            System design and patterns &mdash; <a href="https://github.com/shiba4life/fold_db/blob/mainline/docs/Unified_Architecture.md" target="_blank" rel="noreferrer">Unified_Architecture.md</a></p></Card>
+            System design and patterns &mdash; <a href="https://github.com/shiba4life/fold_db/blob/master/docs/Unified_Architecture.md" target="_blank" rel="noreferrer">Unified_Architecture.md</a></p></Card>
         </div>
       </Section>
 
-      <p className="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+      <hr className="decorative-rule" aria-hidden="true" />
     </>
   );
 }

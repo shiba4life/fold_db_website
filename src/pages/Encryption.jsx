@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Section from '../components/Section';
 import Card from '../components/Card';
 import Label from '../components/Label';
@@ -6,6 +7,13 @@ import Label from '../components/Label';
 export default function Encryption() {
   return (
     <>
+      <Helmet>
+        <title>E2E Encryption - Fold DB</title>
+        <meta name="description" content="How Fold DB encrypts your data end-to-end. Zero-knowledge design with passkey-based key derivation." />
+        <meta property="og:title" content="E2E Encryption - Fold DB" />
+        <meta property="og:description" content="How Fold DB encrypts your data end-to-end. Zero-knowledge design with passkey-based key derivation." />
+        <link rel="canonical" href="https://folddb.com/encryption" />
+      </Helmet>
       <p><Link to="/" className="link-btn">[&larr; Home]</Link></p>
 
       <pre className="ascii">{`
@@ -19,7 +27,7 @@ export default function Encryption() {
 
       <p>Your data encrypted before it leaves your device. The Exemem cloud stores only ciphertext &mdash; we can&rsquo;t read your data, and neither can anyone else.</p>
 
-      <p className="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+      <hr className="decorative-rule" aria-hidden="true" />
 
       {/* THE PROMISE */}
       <Section variant="sage">
@@ -138,11 +146,11 @@ export default function Encryption() {
               4. All previously encrypted data is immediately accessible</p></Card>
         </div>
 
-        <p style={{ marginTop: '1em' }}><span className="bold">WHERE KEYS LIVE</span></p>
+        <p className="section-subheading"><span className="bold">WHERE KEYS LIVE</span></p>
 
         <pre className="compare-table"><span className="dim">CONTEXT          SOURCE                   LIFETIME                 STORAGE</span>{'\n'}<span className="dim">{'─'.repeat(79)}</span>{'\n'}Browser          Passkey PRF at login      In-memory until tab close     None{'\n'}Native app       Passkey PRF at login      In-memory until app close     None{'\n'}CLI (headless)   Passkey PRF or key file   In-memory until exit          ~/.fold_db/e2e.key (fallback)</pre>
 
-        <p style={{ marginTop: '1em' }}><span className="bold">BROWSER SUPPORT</span></p>
+        <p className="section-subheading"><span className="bold">BROWSER SUPPORT</span></p>
 
         <pre className="compare-table"><span className="dim">BROWSER              PRF SUPPORT     NOTES</span>{'\n'}<span className="dim">{'─'.repeat(79)}</span>{'\n'}Chrome / Edge        116+            Full support via WebAuthn PRF extension{'\n'}Safari               18+             Full support{'\n'}Firefox              Not yet         Use CLI key file as fallback</pre>
       </Section>
@@ -412,11 +420,11 @@ hits = client.search("engineer")
         <div className="grid-3">
           <Card><p><Label color="yellow">DESIGN DOC</Label></p><p>
             Full encryption architecture, threat model, and implementation plan.<br />
-            <a href="https://github.com/shiba4life/fold_db/blob/mainline/docs/DESIGN_E2E_ENCRYPTION.md" target="_blank" rel="noreferrer">DESIGN_E2E_ENCRYPTION.md</a></p></Card>
+            <a href="https://github.com/shiba4life/fold_db/blob/master/docs/DESIGN_E2E_ENCRYPTION.md" target="_blank" rel="noreferrer">DESIGN_E2E_ENCRYPTION.md</a></p></Card>
 
           <Card><p><Label color="yellow">CLIENT DESIGN</Label></p><p>
             Exemem client architecture, ExememApiStore, and storage API mapping.<br />
-            <a href="https://github.com/shiba4life/fold_db/blob/mainline/docs/exemem_e2e_client.md" target="_blank" rel="noreferrer">exemem_e2e_client.md</a></p></Card>
+            <a href="https://github.com/shiba4life/fold_db/blob/master/docs/exemem_e2e_client.md" target="_blank" rel="noreferrer">exemem_e2e_client.md</a></p></Card>
 
           <Card><p><Label color="yellow">SOURCE CODE</Label></p><p>
             FoldDB is open source. Browse the code, file issues, or contribute.<br />
@@ -424,7 +432,7 @@ hits = client.search("engineer")
         </div>
       </Section>
 
-      <p className="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+      <hr className="decorative-rule" aria-hidden="true" />
     </>
   );
 }

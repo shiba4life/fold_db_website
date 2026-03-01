@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Section from '../components/Section';
 import Card from '../components/Card';
 import Label from '../components/Label';
@@ -6,6 +7,15 @@ import Label from '../components/Label';
 export default function Guide() {
   return (
     <>
+      <Helmet>
+        <title>User Guide - Fold DB</title>
+        <meta name="description" content="Get FoldDB running on your machine in minutes. Installation, setup, and usage guide." />
+        <meta property="og:title" content="User Guide - Fold DB" />
+        <meta property="og:description" content="Get FoldDB running on your machine in minutes. Installation, setup, and usage guide." />
+        <link rel="canonical" href="https://folddb.com/guide" />
+      </Helmet>
+      <p><Link to="/" className="link-btn">[&larr; Home]</Link></p>
+
       <pre className="ascii">{`
  ###  #   # ### ####  #####
 #     #   #  #  #   # #
@@ -17,7 +27,7 @@ export default function Guide() {
 
       <p>Get FoldDB running on your machine in minutes. No developer tools required &mdash; just install, launch, and start organizing your data with AI.</p>
 
-      <p className="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+      <hr className="decorative-rule" aria-hidden="true" />
 
       {/* INSTALL */}
       <Section variant="sage">
@@ -64,7 +74,7 @@ export default function Guide() {
 
         <p>The first time you open FoldDB, the onboarding wizard walks you through configuration.</p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1em', margin: '1em 0' }}>
+        <div className="card-stack">
           <Card><p><Label color="yellow">STEP 1 &mdash; WELCOME</Label></p>
             <p>Overview of what FoldDB does and how it organizes your data with AI.</p></Card>
 
@@ -114,7 +124,7 @@ export default function Guide() {
 
         <pre className="compare-table"><span className="dim">UI TAB                  WHAT IT DOES</span>{'\n'}<span className="dim">{'\u2500'.repeat(65)}</span>{'\n'}Data Browser            Browse all stored data by schema{'\n'}AI Query                Natural language search across your data{'\n'}Ingest                  Upload files or paste JSON to ingest{'\n'}Smart Folders           Scan and auto-ingest directories{'\n'}Schemas                 View and manage data schemas{'\n'}Settings                Configure AI provider, storage, and keys</pre>
 
-        <p style={{ marginTop: '1.5em' }}><span className="bold">CLI COMMANDS</span> <span className="dim">for power users</span></p>
+        <p className="section-subheading"><span className="bold">CLI COMMANDS</span> <span className="dim">for power users</span></p>
 
         <pre className="compare-table"><span className="dim">COMMAND                              WHAT IT DOES</span>{'\n'}<span className="dim">{'\u2500'.repeat(65)}</span>{'\n'}folddb_server                        Start the server (UI at :9001){'\n'}folddb --help                        Show all CLI commands{'\n'}folddb status -p                     Check node health{'\n'}folddb ingest run data.json          Ingest a JSON file{'\n'}folddb query ai &quot;your question&quot;      Natural language query{'\n'}folddb schema list -p                List all schemas</pre>
 
@@ -125,7 +135,7 @@ export default function Guide() {
       <Section variant="slate">
         <h2 id="troubleshooting"><span className="bold">TROUBLESHOOTING</span> <span className="dim">Common issues</span></h2>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1em', margin: '1em 0' }}>
+        <div className="card-stack">
           <Card><p><Label color="blue">AI NOT WORKING</Label></p>
             <p>Check your API key in Settings (gear icon). Make sure you&rsquo;ve configured either OpenRouter or Ollama. For OpenRouter, verify your key at <a href="https://openrouter.ai/keys" target="_blank" rel="noreferrer">openrouter.ai/keys</a>. For Ollama, ensure it&rsquo;s running locally.</p></Card>
 
@@ -141,7 +151,7 @@ export default function Guide() {
         </div>
       </Section>
 
-      <p className="dim">----------------------------------------------------------------------------------------------------------------------------------------</p>
+      <hr className="decorative-rule" aria-hidden="true" />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Section from '../components/Section';
 import Card from '../components/Card';
 import Label from '../components/Label';
@@ -8,12 +9,24 @@ import TypingAnimation from '../components/TypingAnimation';
 export default function Home() {
   return (
     <>
+      <Helmet>
+        <title>Fold DB - Your data. Your rules.</title>
+        <meta name="description" content="Fold DB is building a new model for personal data — one where your data stays yours, accessed only on your terms, mediated by AI that works for you." />
+        <meta property="og:title" content="Fold DB - Your data. Your rules." />
+        <meta property="og:description" content="Personal data sovereignty with E2E encryption, P2P architecture, and AI-mediated access." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://folddb.com" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Fold DB - Your data. Your rules." />
+        <meta name="twitter:description" content="Personal data sovereignty with E2E encryption, P2P architecture, and AI-mediated access." />
+        <link rel="canonical" href="https://folddb.com" />
+      </Helmet>
       <AsciiTitle />
       <br />
       <TypingAnimation />
-      /////////////////////////////////////////////////////////////////
+      <hr className="decorative-rule" aria-hidden="true" />
       <h1 className="tagline">Your data. Your rules.</h1>
-      -----------------------------------------------------------------
+      <hr className="decorative-rule" aria-hidden="true" />
       <br />
       <p>The modern internet profits from your personal data while you have no real control. Fold DB is building a different model &mdash; one where <span className="bold white">your data stays yours</span>, accessed only on your terms, mediated by AI that works for you.</p>
 

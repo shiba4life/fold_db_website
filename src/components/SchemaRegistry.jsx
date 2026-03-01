@@ -1,29 +1,34 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Card from './Card';
 import Label from './Label';
 
-const SCHEMA_SERVICE_URL = 'https://y0q3m6vk75.execute-api.us-west-2.amazonaws.com';
+const SCHEMA_SERVICE_URL = import.meta.env.VITE_SCHEMA_URL || 'https://y0q3m6vk75.execute-api.us-west-2.amazonaws.com';
 const SCHEMA_API_ENDPOINTS = {
   available: `${SCHEMA_SERVICE_URL}/api/schemas/available`,
   health: `${SCHEMA_SERVICE_URL}/health`,
 };
 
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
+const schemaCache = { data: null, timestamp: 0 };
+const CACHE_TTL = 5 * 60 * 1000;
 
 export default function SchemaRegistry() {
-  const [allSchemas, setAllSchemas] = useState([]);
+  const [allSchemas, setAllSchemas] = useState(schemaCache.data || []);
   const [currentFilter, setCurrentFilter] = useState('all');
   const [serviceStatus, setServiceStatus] = useState({ text: 'checking...', color: '#928374' });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!schemaCache.data);
   const [error, setError] = useState(false);
   const [modalSchema, setModalSchema] = useState(null);
   const [copyText, setCopyText] = useState('[Copy JSON]');
+  const modalRef = useRef(null);
+  const previousFocusRef = useRef(null);
 
-  const loadSchemas = useCallback(async () => {
+  const loadSchemas = useCallback(async (force = false) => {
+    if (!force && schemaCache.data && Date.now() - schemaCache.timestamp < CACHE_TTL) {
+      setAllSchemas(schemaCache.data);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(false);
 
@@ -44,7 +49,10 @@ export default function SchemaRegistry() {
       const response = await fetch(SCHEMA_API_ENDPOINTS.available);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-      setAllSchemas(data.schemas || []);
+      const schemas = data.schemas || [];
+      schemaCache.data = schemas;
+      schemaCache.timestamp = Date.now();
+      setAllSchemas(schemas);
       setLoading(false);
     } catch (err) {
       console.error('Failed to load schemas:', err);
@@ -64,12 +72,15 @@ export default function SchemaRegistry() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
-  // Lock body scroll when modal open
+  // Lock body scroll and manage focus when modal open
   useEffect(() => {
     if (modalSchema) {
+      previousFocusRef.current = document.activeElement;
       document.body.style.overflow = 'hidden';
+      setTimeout(() => modalRef.current?.focus(), 0);
     } else {
       document.body.style.overflow = '';
+      previousFocusRef.current?.focus();
     }
   }, [modalSchema]);
 
@@ -92,6 +103,13 @@ export default function SchemaRegistry() {
       navigator.clipboard.writeText(JSON.stringify(modalSchema, null, 2));
       setCopyText('[Copied!]');
       setTimeout(() => setCopyText('[Copy JSON]'), 1500);
+    }
+  }
+
+  function handleCardKeyDown(e, schema) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setModalSchema(schema);
     }
   }
 
@@ -148,7 +166,7 @@ export default function SchemaRegistry() {
       {error && (
         <div>
           <p>Failed to load schemas.{' '}
-            <span className="link-btn" style={{ cursor: 'pointer' }} onClick={loadSchemas}>[Retry]</span>
+            <button className="link-btn" onClick={() => loadSchemas(true)}>[Retry]</button>
           </p>
         </div>
       )}
@@ -168,7 +186,15 @@ export default function SchemaRegistry() {
             const moreCount = allFields.length - displayFields.length;
 
             return (
-              <Card key={name} className="schema-card" style={{ cursor: 'pointer' }} onClick={() => setModalSchema(schema)}>
+              <Card
+                key={name}
+                className="schema-card"
+                style={{ cursor: 'pointer' }}
+                onClick={() => setModalSchema(schema)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => handleCardKeyDown(e, schema)}
+              >
                 <p><Label color="green">{name}</Label> <span className="dim">{type}</span></p>
                 <p className="dim">{allFields.length} field{allFields.length !== 1 ? 's' : ''}</p>
                 {displayFields.length > 0 && (
@@ -191,18 +217,25 @@ export default function SchemaRegistry() {
         className={`modal-overlay${modalSchema ? ' open' : ''}`}
         onClick={e => { if (e.target === e.currentTarget) setModalSchema(null); }}
       >
-        <div className="modal">
+        <div
+          className="modal"
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={modalSchema ? `Schema: ${modalSchema.name || 'Unnamed'}` : undefined}
+          tabIndex={-1}
+        >
           {modalSchema && (
             <>
               <p>
                 <span className="bold">{modalSchema.name || 'Unnamed'}</span>{' '}
                 <Label color="purple">{modalSchema.schema_type || 'Single'}</Label>
-                <span className="link-btn" style={{ cursor: 'pointer', float: 'right' }} onClick={() => setModalSchema(null)}>[Close]</span>
+                <button className="link-btn modal-close-btn" onClick={() => setModalSchema(null)}>[Close]</button>
               </p>
               {renderModalBody(modalSchema)}
               <p>
-                <span className="link-btn" style={{ cursor: 'pointer' }} onClick={handleCopy}>{copyText}</span>{' '}
-                <span className="link-btn" style={{ cursor: 'pointer' }} onClick={() => setModalSchema(null)}>[Close]</span>
+                <button className="link-btn" onClick={handleCopy}>{copyText}</button>{' '}
+                <button className="link-btn" onClick={() => setModalSchema(null)}>[Close]</button>
               </p>
             </>
           )}
