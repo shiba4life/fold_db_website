@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="site-footer">
       <p>
         <span className="bold white">folddb</span>{' '}
-        <span className="dim">v0.3.0  Open source. Data sovereignty for everyone.</span>
+        <span className="dim">v0.3.0  The Last Database. An experimental self-managing database for your data.</span>
       </p>
       <p>
         <span className="dim">PROJECT</span>{'  '}
