@@ -1,6 +1,6 @@
 # FoldDB Website
 
-The official marketing website for [FoldDB](https://github.com/shiba4life/fold_db) — The AI-Powered Distributed Data Platform.
+The official marketing website for [FoldDB](https://github.com/shiba4life/fold_db) — The Open Data Ownership Platform.
 
 ![FoldDB](https://img.shields.io/badge/Built%20with-Rust-orange?logo=rust)
 ![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue)
