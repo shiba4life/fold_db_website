@@ -90,7 +90,7 @@ Deploy that preview and open `/?sentry-smoke=1`; Sentry should receive
 
 ## Source of truth
 
-This repository is homed at `lastdb:///fold_db_website`. LastGit change requests
+This repository is homed at `http://localhost:3300/EdgeVector/fold_db_website.git`. LastGit change requests
 and `.lastgit/ci.sh` are the merge gate; GitHub is a read-only public mirror for
 clone and browse workflows. Repo-local GitHub Actions are intentionally inert.
 
